@@ -11,7 +11,7 @@ const api = {
   },
   servers: [
     {
-      url: "http://localhost:8080",
+      url: "https://dulachan.store",
       description: "Generated server url",
     },
   ],
