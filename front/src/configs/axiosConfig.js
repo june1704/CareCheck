@@ -2,7 +2,6 @@ import axios from "axios";
 
 // 최초의 한번
 export const api = axios.create({
-    // baseURL: "http://localhost:8080/api",
     baseURL: "https://dulachan.store/api",
 });
 
