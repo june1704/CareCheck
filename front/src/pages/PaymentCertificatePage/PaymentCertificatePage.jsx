@@ -17,15 +17,19 @@ function PaymentCertificatePage(props) {
   const userInfo = queryClient.getQueryData(["userMeQuery"]);
   const navigate = useNavigate();
   const param = useParams();
+
   const [searchPatientData, setSearchPatientData] = useState({
     admissionId: param.admissionId,
     patientId: null,
     clinicDeft: null,
   });
 
-  const searchPatientInfoByAdmId = useGetSearchPatientInfo(
-    Number(param.admissionId)
-  );
+  const searchPatientInfoByAdmId = useGetSearchPatientInfo(Number(param.admissionId), {
+    enabled: !!param.admissionId,
+  });
+
+  const searchPatientInfoByAdmApi = searchPatientInfoByAdmId?.data?.data;
+
   const handleOpenPDF = () => {
     const newWindow = window.open("", "_blank", "width=1000,height=900");
 
@@ -44,7 +48,7 @@ function PaymentCertificatePage(props) {
       </PDFViewer>
     );
   };
-  const searchPatientInfoByAdmApi = searchPatientInfoByAdmId?.data?.data;
+
   useEffect(() => {
     if (!!searchPatientInfoByAdmApi) {
       setSearchPatientData((prev) => ({
@@ -54,15 +58,9 @@ function PaymentCertificatePage(props) {
         clinicDeft: searchPatientInfoByAdmApi.clinicDeft,
       }));
     }
-  }, [param.admissionId, searchPatientInfoByAdmApi]);
+  }, [searchPatientInfoByAdmApi]);
 
-  const admPatientInfoAdmId = useGetSearchPatientInfo(
-    Number(param.admissionId),
-    {
-      enabled: !!param.admissionId,
-    }
-  );
-  const admPatientInfoData = admPatientInfoAdmId?.data?.data || {};
+  const admPatientInfoData = searchPatientInfoByAdmApi || {};
 
   const totalPayAdmId = useGetSearchTotalPay(Number(param.admissionId), {
     enabled: !!param.admissionId,
