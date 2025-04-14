@@ -80,8 +80,8 @@ jobs:
           username: ubuntu
           key: ${{ secrets.SSH_KEY }}
           script: |
-            sudo docker pull ${{ DOCKER_USERNAME }}/carecheck-react-app:latest
-            sudo docker pull ${{ DOCKER_USERNAME }}/carecheck-spring-app:latest
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/carecheck-react-app:latest
+            sudo docker pull ${{ secrets.DOCKER_USERNAME }}/carecheck-spring-app:latest
             cd /home/ubuntu/project
             sudo docker-compose -f project-compose.yml down
             sudo docker-compose -f project-compose.yml up -d
